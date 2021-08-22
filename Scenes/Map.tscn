@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://Scripts/Map.gd" type="Script" id=1]
+
+[node name="Map" type="Spatial"]
+script = ExtResource( 1 )
+sea_level = -0.4
+grass_level = -0.05
+sand_level = -0.1
