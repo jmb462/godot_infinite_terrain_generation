@@ -1,6 +1,8 @@
 Godot Infinite Terrain Generation (Godot 3.x)
 =================================
 
+![screenshot](./screenshot.jpg)
+
 How does it works ?
 -------------------
 
