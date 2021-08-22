@@ -4,6 +4,3 @@
 
 [node name="Map" type="Spatial"]
 script = ExtResource( 1 )
-sea_level = -0.4
-grass_level = -0.05
-sand_level = -0.1

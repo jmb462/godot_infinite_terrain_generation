@@ -7,9 +7,6 @@ var data : Array = []
 var map_size : Vector2 = Vector2(70	,70)
 var far_limit = 35 * 35
 
-# Landscape levels definition
-export var levels : Array = [] 
-
 # Noise used for map generation
 var noise : OpenSimplexNoise
 export var noise_seed : int = 0
@@ -78,7 +75,6 @@ func update(map_position: Vector2 = Vector2.ZERO) -> void:
 				a_tile.set_type(Globals.TYPE.GRASS)
 			elif altitude > sand_level:
 				a_tile.set_type(Globals.TYPE.SAND)
-		
 			else:
 				a_tile.set_type(Globals.TYPE.SAND)
 			a_tile.translation = Vector3((-map_size.x / 2.0 + x) , altitude,(-map_size.y / 2.0 + y))
