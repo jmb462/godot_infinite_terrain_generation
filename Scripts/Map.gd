@@ -6,7 +6,7 @@ onready var tile_packed_scene : PackedScene = preload("res://Scenes/HexagonMeshI
 
 # Data array store tile references
 var data : Array = []
-var map_size : Vector2 = Vector2(30,30)
+var map_size : Vector2 = Vector2(100,100)
 # Noise used for map generation
 var noise : OpenSimplexNoise
 # Ratio Width / Height of hexagonal tiles

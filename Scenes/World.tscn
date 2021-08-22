@@ -1,7 +1,13 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://Scripts/World.gd" type="Script" id=1]
 [ext_resource path="res://Scenes/Map.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Scripts/DebugLayer.gd" type="Script" id=3]
+[ext_resource path="res://Fonts/Staatliches-Regular.ttf" type="DynamicFontData" id=4]
+
+[sub_resource type="DynamicFont" id=1]
+size = 32
+font_data = ExtResource( 4 )
 
 [node name="World" type="Spatial"]
 script = ExtResource( 1 )
@@ -20,3 +26,27 @@ far = 200.0
 [node name="DirectionalLight" type="DirectionalLight" parent="."]
 transform = Transform( -0.255446, 0.502557, 0.825944, 0, -0.854287, 0.519802, 0.966823, 0.132781, 0.218224, 0, 4.78669, 0 )
 light_energy = 0.7
+
+[node name="DebugLayer" type="CanvasLayer" parent="."]
+script = ExtResource( 3 )
+
+[node name="Background" type="ColorRect" parent="DebugLayer"]
+margin_left = 14.0
+margin_top = 10.0
+margin_right = 98.0
+margin_bottom = 67.0
+color = Color( 0, 0, 0, 0.266667 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="FPS" type="Label" parent="DebugLayer/Background"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+custom_fonts/font = SubResource( 1 )
+text = "0"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
