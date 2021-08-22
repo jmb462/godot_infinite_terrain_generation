@@ -2,7 +2,7 @@
 
 [ext_resource path="res://Models/hexagon.obj" type="ArrayMesh" id=1]
 [ext_resource path="res://Scripts/HexagonMeshInstance.gd" type="Script" id=2]
-[ext_resource path="res://Resources/HexagonMaterial.material" type="Material" id=3]
+[ext_resource path="res://Resources/SnowTile.material" type="Material" id=3]
 
 [node name="HexagonMeshInstance" type="MeshInstance"]
 transform = Transform( 1.149, 0, 0, 0, 2, 0, 0, 0, 1.324, 0, 0, 0 )

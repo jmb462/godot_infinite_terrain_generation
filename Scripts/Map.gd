@@ -6,11 +6,13 @@ onready var tile_packed_scene : PackedScene = preload("res://Scenes/HexagonMeshI
 
 # Data array store tile references
 var data : Array = []
-var map_size : Vector2 = Vector2(100,100)
+var map_size : Vector2 = Vector2(70,70)
 # Noise used for map generation
 var noise : OpenSimplexNoise
 # Ratio Width / Height of hexagonal tiles
 export var ratio = sin(PI / 3.0)
+
+var altitude : float = 0.0
 
 var elevation_factor : float = 2.5
 export var sea_level : float = -0.3
@@ -45,7 +47,7 @@ func update(map_position: Vector2 = Vector2.ZERO) -> void:
 	for x in map_size.x:
 		for y in map_size.y:
 			var a_tile : MeshInstance = data[x][y]
-			var altitude = noise.get_noise_2d(x + map_position.x, y + map_position.y) * elevation_factor
+			altitude = noise.get_noise_2d(x + map_position.x, y + map_position.y) * elevation_factor
 			
 			if altitude <= sea_level:
 				a_tile.set_type(TYPE.WATER)
@@ -68,3 +70,5 @@ func update(map_position: Vector2 = Vector2.ZERO) -> void:
 			if  (int(map_position.y) % 2 == 0 and y % 2 == 1) or (int(map_position.y) % 2 != 0 and y % 2 == 0):
 				a_tile.translation.x += 0.5
 
+func get_altitude(map_position: Vector2 = Vector2.ZERO):
+	return altitude

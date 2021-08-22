@@ -12,8 +12,9 @@ export var fix_cam_direction = 90
 onready var world_camera = $CameraAnchor/Camera
 onready var camera_anchor = $CameraAnchor
 onready var fov_target = world_camera.fov
+onready var cam_roll_target = camera_anchor.rotation_degrees.z
 onready var cam_rotation_target = camera_anchor.rotation_degrees.y
-var rotation_speed : float = 10.0
+var rotation_speed : float = 4.0
 onready var map = $Map
 
 func _ready():
@@ -27,7 +28,11 @@ func _process(delta) -> void:
 		world_camera.fov = lerp(world_camera.fov, fov_target, delta * zoom_speed)
 	if cam_rotation_target != camera_anchor.rotation_degrees.y:
 		camera_anchor.rotation_degrees.y = lerp(camera_anchor.rotation_degrees.y, cam_rotation_target, delta * rotation_speed)
-	# Get direction
+	if camera_anchor.rotation_degrees.z != cam_roll_target:
+		camera_anchor.rotation_degrees.z = lerp(camera_anchor.rotation_degrees.z, cam_roll_target, delta * rotation_speed/5.0)
+	if cam_roll_target != 0:
+		cam_roll_target *= 0.5
+		# Get direction
 	#var direction : Vector2 = Vector2(0,0)
 	# if Input.is_action_pressed("ui_left"):
 	# 	direction+=Vector2(-1,0)
@@ -37,12 +42,19 @@ func _process(delta) -> void:
 	# 	direction+=Vector2(0,-1)
 	# if Input.is_action_pressed("ui_down"):
 	# 	direction+=Vector2(0,1)
+	var direction = Vector2.ZERO
 	if Input.is_action_pressed("ui_up"): 
-		var direction = Vector2(0,-1).rotated(deg2rad(-camera_anchor.rotation_degrees.y))
+		direction += Vector2(0,-1).rotated(deg2rad(-camera_anchor.rotation_degrees.y))
+		
+	if Input.is_action_pressed("ui_right"): 
+		direction += Vector2(0.5,0).rotated(deg2rad(-camera_anchor.rotation_degrees.y))
+	if Input.is_action_pressed("ui_left"): 
+		direction += Vector2(-0.5,0).rotated(deg2rad(-camera_anchor.rotation_degrees.y))
+	# Move the camera
+	if direction != Vector2.ZERO:
 		direction=direction.normalized()
-
-		# Move the camera
 		camera_anchor.translation += Vector3(direction.x, 0, direction.y) * delta * speed
+
 
 	# Check if we need to recalcute map
 	var old_pos_x = map_position.x
@@ -67,16 +79,17 @@ func _process(delta) -> void:
 		map.update(map_position)
 		map.translation.z+=tile_offset*sign(new_pos_y-old_pos_y)
 
-
 func _input(event):
 	if event is InputEventMouseButton:
 		if event.button_index==BUTTON_WHEEL_DOWN:
-			fov_target=clamp(fov_target+2, 20, 110)
+			fov_target=clamp(fov_target+2, 40, 130)
 			print(fov_target)
 
 		if event.button_index==BUTTON_WHEEL_UP:
-			fov_target=clamp(fov_target-2, 20, 110)
+			fov_target=clamp(fov_target-2, 40, 130)
 			print(fov_target)
 
 	if event is InputEventMouseMotion:
-		cam_rotation_target = cam_rotation_target-event.relative.x * mouse_sensitivity
+		cam_rotation_target = cam_rotation_target-event.relative.x * mouse_sensitivity / 2
+		if Input.is_action_pressed("ui_up"):
+			cam_roll_target = cam_roll_target-event.relative.x * mouse_sensitivity * 2
