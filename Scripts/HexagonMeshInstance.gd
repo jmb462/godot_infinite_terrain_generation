@@ -1,9 +1,8 @@
 extends MeshInstance
 
-enum TYPE { WATER, SAND, GRASS, ROCK, SNOW}
 var type : int = -1
 
-onready var hexagon_material : SpatialMaterial = get_surface_material(0)
+onready var hexagon_material : Material = get_surface_material(0)
 
 func _ready():
 	pass

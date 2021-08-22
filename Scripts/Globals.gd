@@ -1,7 +1,9 @@
 extends Node
 
+
+enum TYPE { WATER, SAND, GRASS, ROCK, SNOW }
+
 var materials : Array = []
-var material_names : Array = ["SeaTile", "SandTile", "GrassTile", "RockTile", "SnowTile"]
 
 func _init():
     print("Loading tile materials")
